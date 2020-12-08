@@ -1,10 +1,13 @@
 class Voc:
-    def __init__(self, name):
+    def __init__(self, name, a_PAD_token, a_SOS_token, a_EOS_token):
         self.name = name
+        self.PAD_token = a_PAD_token
+        self.SOS_token = a_SOS_token
+        self.EOS_token = a_SOS_token
         self.trimmed = False
         self.word2index = {}
         self.word2count = {}
-        self.index2word = {PAD_token: "PAD", SOS_token: "SOS", EOS_token: "EOS"}
+        self.index2word = {a_PAD_token: "PAD", a_SOS_token: "SOS", a_EOS_token: "EOS"}
         self.num_words = 3  # Count SOS, EOS, PAD
 
     def addSentence(self, sentence):
@@ -39,7 +42,7 @@ class Voc:
         # Reinitialize dictionaries
         self.word2index = {}
         self.word2count = {}
-        self.index2word = {PAD_token: "PAD", SOS_token: "SOS", EOS_token: "EOS"}
+        self.index2word = {self.PAD_token: "PAD", self.SOS_token: "SOS", self.EOS_token: "EOS"}
         self.num_words = 3 # Count default tokens
 
         for word in keep_words:

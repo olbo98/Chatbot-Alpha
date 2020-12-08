@@ -20,6 +20,12 @@ from io import open
 import itertools
 import math
 
+from Voc import Voc
+from EncoderRNN import EncoderRNN
+from Attn import Attn
+from GreedySearchDecoder import GreedySearchDecoder
+from Attn import LuongAttnDecoderRNN
+
 
 USE_CUDA = torch.cuda.is_available()
 device = torch.device("cuda" if USE_CUDA else "cpu")
@@ -122,8 +128,6 @@ PAD_token = 0  # Used for padding short sentences
 SOS_token = 1  # Start-of-sentence token
 EOS_token = 2  # End-of-sentence token
 
-import Voc
-
 MAX_LENGTH = 10  # Maximum sentence length to consider
 
 # Turn a Unicode string to plain ASCII, thanks to
@@ -150,7 +154,7 @@ def readVocs(datafile, corpus_name):
         read().strip().split('\n')
     # Split every line into pairs and normalize
     pairs = [[normalizeString(s) for s in l.split('\t')] for l in lines]
-    voc = Voc(corpus_name)
+    voc = Voc(corpus_name, PAD_token, SOS_token, EOS_token)
     return voc, pairs
 
 # Returns True iff both sentences in a pair 'p' are under the MAX_LENGTH threshold
@@ -282,13 +286,13 @@ print("max_target_len:", max_target_len)
 
 ##Define Models
 #Encoder
-import EncoderRNN.py
+
 
 
 
 #Decoder
 #Luong attention layer
-import Attn
+
 
 
 ##Define Training Procedure
@@ -425,7 +429,6 @@ def trainIters(model_name, voc, pairs, encoder, decoder, encoder_optimizer, deco
 
 ##Define Evaluation
 #Greedy decoding
-import GreedySearchDecoder
 
 
 #Evaluate my text
@@ -561,7 +564,7 @@ encoder.eval()
 decoder.eval()
 
 # Initialize search module
-searcher = GreedySearchDecoder(encoder, decoder)
+searcher = GreedySearchDecoder(encoder, decoder, SOS_token)
 
 # Begin chatting (uncomment and run the following line to begin)
 # evaluateInput(encoder, decoder, searcher, voc)
