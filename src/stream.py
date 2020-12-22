@@ -50,6 +50,9 @@ class Stream():
     def to_list(self):
         return list(self)
 
+    def to_set(self):
+        return set(self)
+
     def to_string(self, sep=''):
         return sep.join(map(str, self.base))
 
