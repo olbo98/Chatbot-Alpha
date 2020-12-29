@@ -1,3 +1,5 @@
+import os
+
 from reddit_loader import *
 from util import *
 from stream import Stream
@@ -103,7 +105,8 @@ def dump_pairs(*files):
         print(f'{pair[0]}\t{pair[1]}')
 
 def dump_pairs_to_file(out_file, *in_files):
-    out = open(out_file, mode='w')
+    datafile = os.path.join("..//..//", out_file)
+    out = open(datafile, mode='w', encoding='utf-8')
     for pair in get_pairs(*in_files):
         out.write(f'{pair[0]}\t{pair[1]}\n')
 
@@ -116,7 +119,7 @@ data_files = [
     'RC_2006-01.bz2', 'RC_2017-11.bz2',
 ]
 
-pairs_output_file = 'pairs.txt'
+pairs_output_file = 'sentence_pairs.txt'
 
 if __name__ == '__main__':
     dump_pairs_to_file(pairs_output_file, *data_files)
