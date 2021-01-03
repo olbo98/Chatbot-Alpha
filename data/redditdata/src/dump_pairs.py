@@ -8,6 +8,8 @@ from stream import Stream
 # Modify this section to define preprocessing.
 # ----------------------------------------------------------------------
 
+keep_subreddits = ['programming']   # add subreddits here
+
 # Modify this function to decide which comments to keep.
 def pre_transform_filter(comment):
     """
@@ -16,7 +18,7 @@ def pre_transform_filter(comment):
     This filter is used before comments are transformed with the
     `comment_transformation` function below.
     """
-    return not_deleted(comment) # more tests?
+    return not_deleted(comment) and (comment['subreddit'] in keep_subreddits) # more tests?
 
 # Modify this function to perform other comment transformations.
 def comment_transformation(comment):
