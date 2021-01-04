@@ -17,10 +17,6 @@ from io import open
 import itertools
 import math
 
-# Use cuda if available
-USE_CUDA = torch.cuda.is_available()
-device = torch.device("cuda" if USE_CUDA else "cpu")
-
 # Train or/and evaluate
 train = False
 evaluate = True
@@ -70,5 +66,6 @@ n_iteration = 4000
 print_every = 1
 save_every = 500
 
-
-
+# Use cuda if available
+USE_CUDA = torch.cuda.is_available()
+device = torch.device("cuda" if USE_CUDA and not gputocpu else "cpu")
